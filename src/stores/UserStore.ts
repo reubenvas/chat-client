@@ -1,4 +1,5 @@
 import { observable, action, configure } from 'mobx';
+import RootStore from './RootStore';
 
 configure({
     enforceActions: 'always',
@@ -8,7 +9,12 @@ configure({
 });
 
 class UserStore {
+    rootStore: RootStore;
     // private socket = '';
+
+    constructor(rootStore: RootStore) {
+        this.rootStore = rootStore;
+    }
 
     @observable id = '';
 
@@ -21,6 +27,7 @@ class UserStore {
     @action connect = (): void => { this.isConnected = true; };
 
     @action disConnect = (): void => { this.isConnected = false; };
+
 }
 
 export default UserStore;

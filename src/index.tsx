@@ -7,15 +7,17 @@ import UserStore from './stores/UserStore';
 import { StoreProvider } from './StoreContext';
 import { initSocketListeners } from './sockets';
 import MessageStore from './stores/MessageStore';
+import RootStore from './stores/RootStore';
 
 initSocketListeners();
 
+// const user = new UserStore();
+// const messages = new MessageStore();
 
-const user = new UserStore();
-const messages = new MessageStore();
+const { UserStore: user, MessageStore: messages } = new RootStore();
 
 ReactDOM.render(
-    <StoreProvider value={{user, messages}}>
+    <StoreProvider value={{ user, messages }}>
         <App />
     </StoreProvider>,
     document.getElementById('root'),

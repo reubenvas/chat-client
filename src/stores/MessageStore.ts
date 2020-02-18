@@ -1,4 +1,9 @@
-import { observable, action, configure } from 'mobx';
+import {
+    observable, action, configure, computed,
+} from 'mobx';
+import emitMessageEvent from '../sockets/emiters/message';
+import RootStore from './RootStore';
+
 
 configure({
     enforceActions: 'always',
@@ -7,16 +12,34 @@ configure({
     reactionRequiresObservable: true,
 });
 
-type chatMessage = {
+type ChatMessage = {
     content: string;
     date: number;
     sender: string;
 };
 
 class MessageStore {
-    @observable messages: chatMessage[] = [];
+    rootStore: RootStore;
 
-    @action addMessage = (message: chatMessage): void => {
+    constructor(rootStore: RootStore) {
+        this.rootStore = rootStore;
+    }
+
+    @observable messages: ChatMessage[] = [];
+
+    @computed get SentMessages(): ChatMessage[] {
+        return this.messages.filter((msg) => msg.sender === this.rootStore.UserStore.nickname);
+    }
+
+    @computed get receivedMessages(): ChatMessage[] {
+        return this.messages.filter((msg) => msg.sender !== this.rootStore.UserStore.nickname);
+    }
+
+    @action sendMessage = (message: ChatMessage): void => {
+        emitMessageEvent(message.content);
+    };
+
+    @action addMessage = (message: ChatMessage): void => {
         this.messages.push(message);
     };
 }

@@ -1,23 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import useStores from '../hooks/useStores';
+import emitNicknameEvent from '../sockets/emiters/nickname';
 
 const LoginPage = () => {
-    const [userName, setuserName] = useState<string>('');
+    const [nickname, setNickname] = useState<string>('');
     const { user } = useStores();
 
     const inputChange = (e: React.FormEvent<HTMLInputElement>) => {
-        setuserName(e.currentTarget.value);
+        setNickname(e.currentTarget.value);
     };
 
     const submit = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
         console.log('clicked submit');
-        console.log(userName);
+        console.log(nickname);
+        emitNicknameEvent(nickname);
     };
 
-    useEffect(() => {
-        user.connect();
-    });
+    // useEffect(() => {
+    //     user.connect();
+    // });
 
     return (
         <div className="">
@@ -27,6 +29,7 @@ const LoginPage = () => {
                     Enter username:
                     <input type="text" onChange={inputChange} />
                 </label>
+                <input type="submit" value="Login" />
 
             </form>
         </div>

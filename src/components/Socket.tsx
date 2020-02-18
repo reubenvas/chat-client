@@ -1,7 +1,16 @@
 import React, { useEffect } from 'react';
-import io from 'socket.io-client';
+import socket from '../sockets';
+import useStores from '../hooks/useStores';
 
 const Socket = (): React.ReactElement => {
+    const { messages } = useStores();
+
+    useEffect(() => {
+        socket.on('message', messages.addMessage);
+    }, [messages.addMessage]);
+
+    // socket.on('message', user.)
+
     // const socket = io('localhost:8000');
 
     // socket.on('usr_joined', (data: string) => {
@@ -13,7 +22,7 @@ const Socket = (): React.ReactElement => {
     // }, [socket]);
 
     return (
-        <div>SOCKET </div>
+        <></>
     );
 };
 

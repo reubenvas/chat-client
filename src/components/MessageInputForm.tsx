@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import emitMessageEvent from '../sockets/emiters/message';
-import useStores from '../hooks/useStores';
 
-const MessageInputForm = () => {
+const MessageInputForm = (): React.ReactElement => {
     const [message, setMessage] = useState<string>('');
-    const { messages, user } = useStores();
 
-    const inputChange = (e: React.FormEvent<HTMLInputElement>) => {
+    const inputChange = (e: React.FormEvent<HTMLInputElement>): void => {
         setMessage(e.currentTarget.value);
     };
 
@@ -14,16 +12,7 @@ const MessageInputForm = () => {
         e.preventDefault();
         console.log('clicked submit, now SEND');
         console.log(message);
-        sendMessage(message);
-    };
-
-    const sendMessage = (msg: string): void => {
-        emitMessageEvent(msg);
-        messages.addMessage({
-            content: msg,
-            date: Date.now(),
-            sender: user.nickname,
-        });
+        emitMessageEvent(message);
     };
 
     return (
