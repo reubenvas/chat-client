@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import useStores from '../hooks/useStores';
-import emitNicknameEvent from '../sockets/emiters/nickname';
+import emitSetNicknameEvent from '../sockets/emiters/nickname';
 
 const LoginPage = () => {
-    const [nickname, setNickname] = useState<string>('');
+    const [nickname, setNickname] = useState<string>(''); // create ref for nickname instead
     const { user } = useStores();
 
     const inputChange = (e: React.FormEvent<HTMLInputElement>) => {
@@ -14,7 +14,7 @@ const LoginPage = () => {
         e.preventDefault();
         console.log('clicked submit');
         console.log(nickname);
-        emitNicknameEvent(nickname);
+        emitSetNicknameEvent(nickname);
     };
 
     // useEffect(() => {

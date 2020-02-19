@@ -12,7 +12,7 @@ configure({
     reactionRequiresObservable: true,
 });
 
-type ChatMessage = {
+export type ChatMessage = {
     content: string;
     date: number;
     sender: string;

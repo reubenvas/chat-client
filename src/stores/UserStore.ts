@@ -16,11 +16,9 @@ class UserStore {
         this.rootStore = rootStore;
     }
 
-    @observable id = '';
-
     @observable nickname = '';
 
-    @observable loginTime: Date | null = null;
+    @observable loginTime: number | null = null;
 
     @observable isConnected = false;
 
@@ -28,6 +26,11 @@ class UserStore {
 
     @action disConnect = (): void => { this.isConnected = false; };
 
+    @action logIn = (nickname: string): void => {
+        this.nickname = nickname;
+        this.loginTime = Date.now();
+        this.connect();
+    };
 }
 
 export default UserStore;
