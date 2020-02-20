@@ -8,11 +8,16 @@ const Socket = (): React.ReactElement => {
     const { messages, user } = useStores();
 
     useEffect(() => {
-        socket.on('message', (message: ChatMessage) => {
+        console.log(socket.id);
+        socket.on('new message', (chatMessage: ChatMessage) => {
             if (user.isConnected) {
-                messages.addMessage(message);
+                messages.addMessage(chatMessage);
             }
         });
+        socket.on('message invalid', (chatMessageContent: ChatMessage['content'], message: string) => {
+            toast.error(message);
+        });
+
         socket.on('nickname invalid', (nickname: string, message: string) => {
             toast.error(`🧨 ${message} 🕳`);
         });
@@ -21,11 +26,12 @@ const Socket = (): React.ReactElement => {
             user.logIn(nickname);
         });
         return (): void => {
-            socket.off('message', messages.addMessage);
+            socket.off('message');
+            socket.off('message invalid');
             socket.off('nickname invalid');
             socket.off('nickname approved');
         };
-    }, [messages.addMessage, user]);
+    }, [messages, messages.addMessage, user]);
 
 
     // socket.on('message', user.)
