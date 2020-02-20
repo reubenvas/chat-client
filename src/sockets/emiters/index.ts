@@ -5,5 +5,5 @@ export const emitMessageEvent = (message: string): void => {
 };
 
 export const emitNicknameEvent = (nickname: string): void => {
-    socket.emit('nickname', nickname);
+    socket.emit('set nickname', nickname);
 };

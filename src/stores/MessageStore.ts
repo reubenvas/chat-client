@@ -35,12 +35,12 @@ class MessageStore {
         return this.messages.filter((msg) => msg.sender !== this.rootStore.UserStore.nickname);
     }
 
-    @action sendMessage = (message: ChatMessage): void => {
-        emitMessageEvent(message.content);
-    };
-
     @action addMessage = (message: ChatMessage): void => {
         this.messages.push(message);
+    };
+
+    @action deleteAllMessages = (): void => {
+        this.messages.length = 0;
     };
 }
 

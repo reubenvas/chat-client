@@ -12,12 +12,6 @@ import 'react-toastify/dist/ReactToastify.css';
 const App = observer(() => {
     const { user } = useStores();
 
-    React.useEffect(() => {
-        toast.success('HEEEEELLO');
-        toast.warn('HEEEEELLO');
-        toast.error('HEEEEELLO');
-    });
-
     return (
         <div className="App">
             <Socket />

@@ -1,4 +1,6 @@
-import { observable, action, configure } from 'mobx';
+import {
+    observable, configure, action, computed,
+} from 'mobx';
 import RootStore from './RootStore';
 
 configure({
@@ -18,18 +20,16 @@ class UserStore {
 
     @observable nickname = '';
 
-    @observable loginTime: number | null = null;
-
-    @observable isConnected = false;
-
-    @action connect = (): void => { this.isConnected = true; };
-
-    @action disConnect = (): void => { this.isConnected = false; };
+    @computed get isConnected(): boolean {
+        return Boolean(this.nickname);
+    }
 
     @action logIn = (nickname: string): void => {
         this.nickname = nickname;
-        this.loginTime = Date.now();
-        this.connect();
+    };
+
+    @action logOut = (): void => {
+        this.nickname = '';
     };
 }
 
