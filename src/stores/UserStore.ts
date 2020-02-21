@@ -18,11 +18,21 @@ class UserStore {
         this.rootStore = rootStore;
     }
 
+    @observable isConnectedToServer = false;
+
     @observable nickname = '';
 
     @computed get isConnected(): boolean {
         return Boolean(this.nickname);
     }
+
+    @action connectToServer = (): void => {
+        this.isConnectedToServer = true;
+    };
+
+    @action disconnectFromServer = (): void => {
+        this.isConnectedToServer = false;
+    };
 
     @action logIn = (nickname: string): void => {
         this.nickname = nickname;

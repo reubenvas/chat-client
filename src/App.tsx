@@ -12,6 +12,16 @@ import 'react-toastify/dist/ReactToastify.css';
 const App = observer(() => {
     const { user } = useStores();
 
+    const userInterface = (): React.ReactNode => {
+        if (!user.isConnectedToServer) {
+            return <div>NOT EVEN CONNECTED TO SERVER</div>;
+        }
+        if (user.isConnected) {
+            return <Chat />;
+        }
+        return <LoginPage />;
+    };
+
     return (
         <div className="App">
             <Socket />
@@ -27,7 +37,7 @@ const App = observer(() => {
                 pauseOnHover
                 transition={Slide}
             />
-            {user.isConnected ? <Chat /> : <LoginPage />}
+            {userInterface()}
 
         </div>
     );

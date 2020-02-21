@@ -14,8 +14,17 @@ const Socket = (): React.ReactElement => {
 
     useEffect(() => {
         console.log(socket.id);
-        socket.on('connection', () => {
+        socket.on('connect', () => {
             console.log('Connected w/ socket id:', socket.id);
+            user.connectToServer();
+        });
+        socket.on('connect_error', (err: Error) => {
+            console.error('NO CONNECTION TO SERVER.');
+            console.log(err);
+            if (user.isConnectedToServer) {
+                user.disconnectFromServer();
+                toast.error(err.message);
+            }
         });
 
         socket.on('new message', (chatMessage: ChatMessage) => {
