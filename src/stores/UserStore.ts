@@ -22,7 +22,9 @@ class UserStore {
 
     @observable nickname = '';
 
-    @computed get isConnected(): boolean {
+    socket?: SocketIOClient.Socket;
+
+    @computed get isConnectedToChat(): boolean {
         return Boolean(this.nickname);
     }
 
@@ -32,6 +34,7 @@ class UserStore {
 
     @action disconnectFromServer = (): void => {
         this.isConnectedToServer = false;
+        this.logOut();
     };
 
     @action logIn = (nickname: string): void => {

@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.css';
 import { observer } from 'mobx-react-lite';
-import { ToastContainer, toast, Slide } from 'react-toastify';
+import { ToastContainer, Slide } from 'react-toastify';
 import Socket from './components/Socket';
-import Chat from './components/Chat';
+import Chat from './components/Chat/Chat';
 import LoginPage from './components/LoginPage';
 import useStores from './hooks/useStores';
 import 'react-toastify/dist/ReactToastify.css';
@@ -16,7 +16,7 @@ const App = observer(() => {
         if (!user.isConnectedToServer) {
             return <div>NOT EVEN CONNECTED TO SERVER</div>;
         }
-        if (user.isConnected) {
+        if (user.isConnectedToChat) {
             return <Chat />;
         }
         return <LoginPage />;

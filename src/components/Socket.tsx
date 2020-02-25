@@ -5,8 +5,6 @@ import socket from '../sockets';
 // import io from 'socket.io-client';
 import useStores from '../hooks/useStores';
 import { ChatMessage } from '../stores/MessageStore';
-import message from '../sockets/emiters/message';
-
 // const socket = io('localhost:8000');
 
 const Socket = (): React.ReactElement => {
@@ -14,26 +12,21 @@ const Socket = (): React.ReactElement => {
 
     useEffect(() => {
         console.log(socket.id);
+        if (socket.id) {
+            user.connectToServer();
+        }
         socket.on('connect', () => {
             console.log('Connected w/ socket id:', socket.id);
-            user.connectToServer();
+            if (!user.isConnectedToServer) {
+                user.connectToServer();
+            }
         });
         socket.on('connect_error', (err: Error) => {
-            console.error('NO CONNECTION TO SERVER.');
-            console.log(err);
+            const message = 'Oh noo! It seems like the chat server is down. Please try again later.';
             if (user.isConnectedToServer) {
                 user.disconnectFromServer();
-                toast.error(err.message);
+                toast.error(message);
             }
-        });
-
-        socket.on('new message', (chatMessage: ChatMessage) => {
-            if (user.isConnected) {
-                messages.addMessage(chatMessage);
-            }
-        });
-        socket.on('message invalid', (chatMessageContent: ChatMessage['content'], message: string) => {
-            toast.error(message);
         });
 
         socket.on('nickname invalid', (nickname: string, message: string) => {
@@ -43,14 +36,25 @@ const Socket = (): React.ReactElement => {
             toast.success('🌞 Wow! That\'s a great nickname!');
             user.logIn(nickname);
         });
+
+        socket.on('new message', (chatMessage: ChatMessage) => {
+            if (user.isConnectedToServer && user.isConnectedToChat) {
+                messages.addMessage(chatMessage);
+            }
+        });
+        socket.on('message invalid', (chatMessageContent: ChatMessage['content'], message: string) => {
+            toast.error(message);
+        });
+
         socket.on('disconnect user', (nickname: string, message: string) => {
             toast.error(message);
             user.logOut();
             messages.deleteAllMessages();
         });
-        socket.on('user inactivity', (nickname: string, message: string) => {
+        socket.on('user disconnected', (nickname: string, message: string) => {
             toast.warn(message);
         });
+
         return (): void => {
             socket.off('message');
             socket.off('message invalid');

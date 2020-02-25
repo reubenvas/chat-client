@@ -3,11 +3,10 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import UserStore from './stores/UserStore';
 import { StoreProvider } from './StoreContext';
 import { initSocketListeners } from './sockets';
-import MessageStore from './stores/MessageStore';
 import RootStore from './stores/RootStore';
+import 'typeface-roboto';
 
 initSocketListeners();
 

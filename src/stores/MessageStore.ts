@@ -1,7 +1,6 @@
 import {
     observable, action, configure, computed,
 } from 'mobx';
-import emitMessageEvent from '../sockets/emiters/message';
 import RootStore from './RootStore';
 
 
