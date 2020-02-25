@@ -16,6 +16,7 @@
     },
     "plugins": [],
     "rules": {
+        "import/no-cycle": "off",
         "import/no-extraneous-dependencies": [
             "error",
             {

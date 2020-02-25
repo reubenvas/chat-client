@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
-import { makeStyles, createStyles, Button } from '@material-ui/core';
-import emitMessageEvent from '../../sockets/emiters/message';
-import { emitDisconnectUserEvent } from '../../sockets/emiters';
-import useStores from '../../hooks/useStores';
+import { makeStyles, createStyles } from '@material-ui/core/styles';
+import { emitMessageEvent } from '../../sockets/emitters';
 
 const useStyles = makeStyles(() => createStyles({
     root: {
@@ -19,7 +17,6 @@ const useStyles = makeStyles(() => createStyles({
 }));
 
 const MessageInputForm = (): React.ReactElement => {
-    const { user, messages } = useStores();
     const [message, setMessage] = useState<string>('');
     const [opacity, setOpacity] = useState<number>(1);
     const classes = useStyles();
@@ -71,13 +68,9 @@ const MessageInputForm = (): React.ReactElement => {
                     variant="outlined"
                     fullWidth
                     margin="normal"
-
+                    size="medium"
                 />
             </form>
-            {/* <Button onClick={leaveChat} className={classes.leaveButton} variant="outlined" color="secondary">
-                Leave chat
-            </Button> */}
-            {/* <button type="button" onClick={leaveChat}>Leave chat</button> */}
         </Grid>
     );
 };

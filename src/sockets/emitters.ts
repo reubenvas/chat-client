@@ -1,4 +1,4 @@
-import socket from '..';
+import socket from '.';
 
 export const emitMessageEvent = (message: string): void => {
     socket.emit('message', message);

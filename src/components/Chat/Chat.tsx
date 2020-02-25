@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 import MessageInputForm from './MessageInputForm';
 import useStores from '../../hooks/useStores';
 import MessageLayout from './MessagesLayout';
-import { emitDisconnectUserEvent } from '../../sockets/emiters';
+import { emitDisconnectUserEvent } from '../../sockets/emitters';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     root: {
@@ -37,14 +37,12 @@ const Chat = observer(() => {
         messages.deleteAllMessages();
         emitDisconnectUserEvent();
     };
-    
 
     return (
         <>
             <AppBar color="primary">
                 <Toolbar>
-                    <Button>Meny</Button>
-                    <Typography variant="subtitle1" className={classes.title}>
+                    <Typography variant="subtitle1" component="span" className={classes.title}>
                         visible as:
                         <Typography variant="h5" className={classes.title}>
                             {user.nickname}

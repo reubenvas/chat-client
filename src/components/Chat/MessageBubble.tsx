@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import {
-    Grid, Paper, makeStyles, createStyles, Typography,
+    Grid, Paper, makeStyles, createStyles, Typography, Theme,
 } from '@material-ui/core';
+import { grey } from '@material-ui/core/colors';
 import { ChatMessage } from '../../stores/MessageStore';
 import useStores from '../../hooks/useStores';
 
-const useStyles = makeStyles(() => createStyles({
+const useStyles = makeStyles((theme: Theme) => createStyles({
     root: {
         flexGrow: 1,
         height: '80vmin',
@@ -32,6 +33,10 @@ const useStyles = makeStyles(() => createStyles({
         alignItems: 'center',
         borderRadius: 100,
     },
+    grey: {
+        color: theme.palette.getContrastText(grey[200]),
+        backgroundColor: grey[200],
+    },
 }));
 
 const MessageBubble = ({ date, sender, content }: ChatMessage): React.ReactElement => {
@@ -39,7 +44,10 @@ const MessageBubble = ({ date, sender, content }: ChatMessage): React.ReactEleme
     const { user } = useStores();
     const [timeVisible, setTimeVisible] = useState<boolean>(false);
 
-    const messageStyling: { borderBottomLeftRadius?: 10; borderBottomRightRadius?: 10; paddingRight?: 20; paddingLeft?: 20 } = {};
+    const messageStyling: {
+        borderBottomLeftRadius?: 10; borderBottomRightRadius?: 10;
+        paddingRight?: 20; paddingLeft?: 20;
+    } = {};
     const timeArrowStyling: { paddingRight?: 14; paddingLeft?: 14; marginRight?: 10; marginLeft?: 10; clipPath?: 'polygon(0% 0%, 90% 0, 100% 50%, 90% 100%, 0 100%)' | 'polygon(10% 0, 100% 1%, 100% 100%, 10% 100%, 0% 50%)' } = {};
     let alignment: 'flex-start' | 'flex-end';
     let isReceived = false;
@@ -61,18 +69,16 @@ const MessageBubble = ({ date, sender, content }: ChatMessage): React.ReactEleme
         isReceived = true;
     }
 
-    const hoverEnter = () => {
-        console.log('entering hover...');
+    const hoverEnter = (): void => {
         setTimeVisible(true);
     };
 
-    const hoverLeave = () => {
-        console.log('leaving hover...');
+    const hoverLeave = (): void => {
         setTimeVisible(false);
     };
-    
 
-    const TimeArrow = () => (timeVisible ? (
+
+    const TimeArrow = (): React.ReactElement | null => (timeVisible ? (
         <div className={classes.containerCenter}>
             <Typography className={classes.timeArrow} style={timeArrowStyling} variant="caption" display="block">
                 {(new Date(date)).toLocaleString()}
@@ -87,13 +93,15 @@ const MessageBubble = ({ date, sender, content }: ChatMessage): React.ReactEleme
                 <Grid item container direction="row" justify={alignment}>
                     {!isReceived && <TimeArrow />}
                     <Paper
-                        className={classes.paper}
+                        className={`${classes.paper} ${!isReceived ? classes.grey : ''}`}
                         style={messageStyling}
                         onMouseEnter={hoverEnter}
                         onMouseLeave={hoverLeave}
                         onFocus={hoverEnter}
                     >
-                        {content}
+                        <Typography variant="h6">
+                            {content}
+                        </Typography>
                     </Paper>
                     {isReceived && <TimeArrow />}
                 </Grid>

@@ -1,7 +1,6 @@
 import {
-    observable, action, configure, computed,
+    observable, action, configure,
 } from 'mobx';
-import RootStore from './RootStore';
 
 
 configure({
@@ -11,30 +10,24 @@ configure({
     reactionRequiresObservable: true,
 });
 
+
 export type ChatMessage = {
     content: string;
     date: number;
     sender: string;
+    type: 'message';
+};
+
+export type ChatNotification = {
+    content: string;
+    type: 'notification';
+    date: number;
 };
 
 class MessageStore {
-    rootStore: RootStore;
+    @observable messages: (ChatMessage | ChatNotification)[] = [];
 
-    constructor(rootStore: RootStore) {
-        this.rootStore = rootStore;
-    }
-
-    @observable messages: ChatMessage[] = [];
-
-    @computed get SentMessages(): ChatMessage[] {
-        return this.messages.filter((msg) => msg.sender === this.rootStore.UserStore.nickname);
-    }
-
-    @computed get receivedMessages(): ChatMessage[] {
-        return this.messages.filter((msg) => msg.sender !== this.rootStore.UserStore.nickname);
-    }
-
-    @action addMessage = (message: ChatMessage): void => {
+    @action addMessage = (message: ChatMessage | ChatNotification): void => {
         this.messages.push(message);
     };
 

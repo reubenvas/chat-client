@@ -4,16 +4,14 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { StoreProvider } from './StoreContext';
-import { initSocketListeners } from './sockets';
-import RootStore from './stores/RootStore';
+import UserStore from './stores/UserStore';
+import MessageStore from './stores/MessageStore';
 import 'typeface-roboto';
 
-initSocketListeners();
 
-// const user = new UserStore();
-// const messages = new MessageStore();
+const user = new UserStore();
+const messages = new MessageStore();
 
-const { UserStore: user, MessageStore: messages } = new RootStore();
 
 ReactDOM.render(
     <StoreProvider value={{ user, messages }}>

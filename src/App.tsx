@@ -4,23 +4,13 @@ import { observer } from 'mobx-react-lite';
 import { ToastContainer, Slide } from 'react-toastify';
 import Socket from './components/Socket';
 import Chat from './components/Chat/Chat';
-import LoginPage from './components/LoginPage';
+import Login from './components/Login';
 import useStores from './hooks/useStores';
 import 'react-toastify/dist/ReactToastify.css';
 
 
 const App = observer(() => {
-    const { user } = useStores();
-
-    const userInterface = (): React.ReactNode => {
-        if (!user.isConnectedToServer) {
-            return <div>NOT EVEN CONNECTED TO SERVER</div>;
-        }
-        if (user.isConnectedToChat) {
-            return <Chat />;
-        }
-        return <LoginPage />;
-    };
+    const { user: { isConnectedToChat } } = useStores();
 
     return (
         <div className="App">
@@ -37,8 +27,7 @@ const App = observer(() => {
                 pauseOnHover
                 transition={Slide}
             />
-            {userInterface()}
-
+            {isConnectedToChat ? <Chat /> : <Login />}
         </div>
     );
 });
