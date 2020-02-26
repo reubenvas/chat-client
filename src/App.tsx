@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite';
 import { ToastContainer, Slide } from 'react-toastify';
 import Socket from './components/Socket';
 import Chat from './components/Chat/Chat';
-import Login from './components/Login';
+import Login from './components/Login/Login';
 import useStores from './hooks/useStores';
 import 'react-toastify/dist/ReactToastify.css';
 

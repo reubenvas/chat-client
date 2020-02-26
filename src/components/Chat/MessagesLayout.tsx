@@ -1,8 +1,8 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
-import {
-    Grid, makeStyles, createStyles, Typography,
-} from '@material-ui/core';
+import { makeStyles, createStyles } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 import useStores from '../../hooks/useStores';
 import MessageBubble from './MessageBubble';
 
@@ -24,7 +24,7 @@ const MessageLayout = (): React.ReactElement => {
     const classes = useStyles();
 
     return (
-        <Grid className={`${classes.root} auto-scrollable-cont`} container direction="column" wrap="nowrap">
+        <Grid className={`${classes.root}`} container direction="column" wrap="nowrap">
             {messages.messages.map((msg) => (msg.type === 'message'
                 ? (
                     <MessageBubble
@@ -36,7 +36,7 @@ const MessageLayout = (): React.ReactElement => {
                     />
                 )
                 : (
-                    <Typography variant="body1" gutterBottom>
+                    <Typography variant="body1" gutterBottom key={msg.date}>
                         {msg.content}
                     </Typography>
                 )))}

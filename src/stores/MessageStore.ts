@@ -2,14 +2,12 @@ import {
     observable, action, configure,
 } from 'mobx';
 
-
 configure({
     enforceActions: 'always',
     computedRequiresReaction: true,
     observableRequiresReaction: true,
     reactionRequiresObservable: true,
 });
-
 
 export type ChatMessage = {
     content: string;

@@ -1,3 +1,19 @@
+# Chat client
+
+## 1. Installation
+
+```npm
+npm install
+```
+
+## 2. Start
+
+```npm
+npm start
+```
+
+---
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

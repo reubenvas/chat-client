@@ -34,14 +34,12 @@ const MessageInputForm = (): React.ReactElement => {
         setMessage('');
     };
 
-
     const fadeIn = (): void => {
         setOpacity(1);
     };
     const fadeOut = (): void => {
         setOpacity(0.2);
     };
-
 
     return (
         <Grid

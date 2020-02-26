@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 import Grid from '@material-ui/core/Grid';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import { makeStyles, createStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -11,24 +11,17 @@ import useStores from '../../hooks/useStores';
 import MessageLayout from './MessagesLayout';
 import { emitDisconnectUserEvent } from '../../sockets/emitters';
 
-const useStyles = makeStyles((theme: Theme) => createStyles({
+const useStyles = makeStyles(() => createStyles({
     root: {
         paddingTop: 65,
         flexGrow: 1,
     },
-    paper: {
-        height: 140,
-        width: 400,
-    },
     title: {
         flexGrow: 1,
     },
-    control: {
-        padding: theme.spacing(2),
-    },
 }));
 
-const Chat = observer(() => {
+const Chat = (): React.ReactElement => {
     const classes = useStyles();
     const { user, messages } = useStores();
 
@@ -59,6 +52,6 @@ const Chat = observer(() => {
             </Grid>
         </>
     );
-});
+};
 
-export default Chat;
+export default observer(Chat);

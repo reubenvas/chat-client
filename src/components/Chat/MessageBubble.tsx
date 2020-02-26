@@ -1,18 +1,14 @@
 import React, { useState } from 'react';
-import {
-    Grid, Paper, makeStyles, createStyles, Typography, Theme,
-} from '@material-ui/core';
-import { grey } from '@material-ui/core/colors';
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import grey from '@material-ui/core/colors/grey';
+import { observer } from 'mobx-react-lite';
 import { ChatMessage } from '../../stores/MessageStore';
 import useStores from '../../hooks/useStores';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
-    root: {
-        flexGrow: 1,
-        height: '80vmin',
-        overflowY: 'auto',
-        border: '1px solid',
-    },
     containerCenter: {
         display: 'flex',
         alignItems: 'center',
@@ -93,7 +89,7 @@ const MessageBubble = ({ date, sender, content }: ChatMessage): React.ReactEleme
                 <Grid item container direction="row" justify={alignment}>
                     {!isReceived && <TimeArrow />}
                     <Paper
-                        className={`${classes.paper} ${!isReceived ? classes.grey : ''}`}
+                        className={`${classes.paper} ${isReceived ? '' : classes.grey}`}
                         style={messageStyling}
                         onMouseEnter={hoverEnter}
                         onMouseLeave={hoverLeave}
@@ -113,4 +109,4 @@ const MessageBubble = ({ date, sender, content }: ChatMessage): React.ReactEleme
     );
 };
 
-export default MessageBubble;
+export default observer(MessageBubble);

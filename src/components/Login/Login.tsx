@@ -6,16 +6,16 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import { observer } from 'mobx-react-lite';
-import { emitNicknameEvent } from '../sockets/emitters';
+import { emitNicknameEvent } from '../../sockets/emitters';
 import ServerDisconnectDialog from './ServerDisconnectDialog';
-import useStores from '../hooks/useStores';
+import useStores from '../../hooks/useStores';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     root: {
         height: '-webkit-fill-available',
     },
     paper: {
-        width: '19vw',
+        width: '28vw',
         height: '35vh',
         display: 'flex',
         justifyContent: 'center',
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 
 const Login = (): React.ReactElement => {
     const { user: { isConnectedToServer } } = useStores();
-    const [nickname, setNickname] = useState<string>(''); // create ref for nickname instead
+    const [nickname, setNickname] = useState<string>('');
     const classes = useStyles();
 
     const inputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
