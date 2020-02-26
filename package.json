@@ -11,8 +11,6 @@
     "@types/node": "^12.12.27",
     "@types/react": "^16.9.19",
     "@types/react-dom": "^16.9.5",
-    "chalk": "^3.0.0",
-    "eslint-watch": "^6.0.1",
     "mobx": "^5.15.4",
     "mobx-react-lite": "^1.5.2",
     "react": "^16.12.0",
