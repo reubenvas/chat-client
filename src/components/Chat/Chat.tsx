@@ -19,6 +19,12 @@ const useStyles = makeStyles(() => createStyles({
     title: {
         flexGrow: 1,
     },
+    centerName: {
+        position: 'absolute',
+        width: '100vw',
+        left: 0,
+        top: 0,
+    },
 }));
 
 const Chat = (): React.ReactElement => {
@@ -35,15 +41,21 @@ const Chat = (): React.ReactElement => {
         <>
             <AppBar color="primary">
                 <Toolbar>
-                    <Typography variant="subtitle1" component="span" className={classes.title}>
-                        visible as:
-                        <Typography variant="h5" className={classes.title}>
-                            {user.nickname}
-                        </Typography>
-                    </Typography>
-                    <Button onClick={leaveChat} variant="outlined" color="inherit">
-                        Leave chat
-                    </Button>
+                    <Grid container justify="flex-end">
+                        <Grid item justify="center" container alignItems="center" className={classes.centerName}>
+                            <Typography variant="subtitle1" component="span" className={classes.title}>
+                                visible as:
+                                <Typography variant="h5" className={classes.title}>
+                                    {user.nickname}
+                                </Typography>
+                            </Typography>
+                        </Grid>
+                        <Grid item>
+                            <Button onClick={leaveChat} variant="outlined" color="inherit">
+                                Leave chat
+                            </Button>
+                        </Grid>
+                    </Grid>
                 </Toolbar>
             </AppBar>
             <Grid container className={classes.root} justify="center">
